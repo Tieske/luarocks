@@ -1,4 +1,15 @@
 @echo off
+REM How to use:
+REM This script will build binaries if not available yet. To do this, it must be run from the
+REM Visual Studio commandprompt.
+REM 
+REM USAGE: test [/clean]
+REM
+REM   /clean  : cleans all temporary files, and will rebuild all binaries (takes a while...)
+REM
+REM Any options can be set by editing 'config.bat'
+
+
 REM First call config to setup the environment
 call config.bat
 setlocal
