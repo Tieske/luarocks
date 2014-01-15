@@ -1,2 +1,3 @@
 /config.*
 /src/luarocks/site_config.lua
+/test/win_testfiles
