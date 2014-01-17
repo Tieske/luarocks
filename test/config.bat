@@ -1,7 +1,13 @@
 @echo off
-REM Configuration file for the Windows test, call with "/clear" to reset to original values
-
+REM Configuration file for the Windows test, call with "/clean" to reset to original values
 REM Directory paths should end with a '\'
+
+
+REM Check whether we need to revert...
+if not [%1]==[/clean] goto clean
+REM Make sure that we only run this once...
+if not [%LRT_OLDDIR%]==[] goto exit_file
+
 
 REM Store active directory
 SET LRT_OLDDIR=%CD%
@@ -27,10 +33,13 @@ SET LRT_TOOLS=%LRT_TEST%..\win32\bin\bin\
 REM PATH to temporary files/binaries created
 SET LRT_TEMP=%LRT_TEST%win_testfiles\
 
-if not [%1]==[/clear] goto exit_file
+goto exit_file
+:clean
+
 REM Restore settings
 SET PATH=%LRT_OLD_PATH%
 chdir /d "%LRT_OLDDIR%"
+REM CLeanup variables
 SET LRT_OLDDIR=
 SET LRT_OLD_PATH=
 SET LRT_MINGWPATH=
