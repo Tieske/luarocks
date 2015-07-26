@@ -911,6 +911,22 @@ else
 	print(S[[Local user rocktree exists : "$LOCAL_TREE"]])
 end
 
+local target = (vars.TREE_BIN or vars.TREE_ROOT..[[\bin]])
+if not exists(target) then mkdir(target) end
+target = target..[[\]]
+for _, c in ipairs{"luarocks", "luarocks-admin"} do
+  -- create a shortcut/wrapper from the configured systemtree BIN directory
+	exec([[DEL /F /Q "]]..target..c..[[.bat" 2>NUL]])
+	local f,e = io.open(target..c..".bat", "w")
+	f:write(S[[
+@ECHO OFF
+SETLOCAL
+CALL "$BINDIR\%~n0.bat" %*
+exit /b %ERRORLEVEL% 
+]])
+	f:close()
+end
+
 -- Load registry information
 if REGISTRY then
 	-- expand template with correct path information
